@@ -2,14 +2,14 @@ let sumEl = document.getElementById("sum-el");
 let result = document.getElementById("result");
 let cardNum = document.getElementById("card-number");
 let gameActive = true; 
+//let total = 0;
 
 
 let randomDecimal = Math.random();
-let num1 = Math.floor(randomDecimal * 11) + 1;
-let num2 = Math.floor(randomDecimal * 11) - 1;
-let num3 = Math.floor(randomDecimal * 11) +2;
-let num4 = Math.floor(randomDecimal * 11) +2;
-let num5= Math.floor(randomDecimal * 11) +2;
+
+function drawCards(){
+    return Math.floor(randomDecimal * 11) + 1; 
+}
 
 
 function  start(){
@@ -17,51 +17,36 @@ function  start(){
         console.log("Game is not active. Press reset to start a new game.");
         return;
     }
-    cardNum.textContent = "Cards: ";
-    result.textContent = "Want to play a round?";
-    sumEl.textContent = "Sum: "; 
-
-    cardNum.textContent +=  num1 + " - "+ num2;
-    let total = num1+num2
-    sumEl.textContent = "Sum: " + total
-    checking()
-    
+    let cards = [drawCards(),drawCards()]
+    displayCard(cards)   
 }
 
 function carding(){
-    if (!gameActive) {
-        console.log("Game is not active. Press reset to start a new game.");
-        return;
-    }
-    cardNum.textContent = " Cards: " + num1 + " - "+ num2  +  " - "+ num3 ;
-    let total = num1+num2+ num3
-    sumEl.textContent = "Sum: " + total
-    checking()
 
-}
-function secondRound(){
     if (!gameActive) {
         console.log("Game is not active. Press reset to start a new game.");
         return;
     }
-    cardNum.textContent = " Cards: " + num1 + " - "+ num2  +  " - "+ num3 + " - " + num4;
-    let total = num1+num2+ num3+num4
-    sumEl.textContent = "Sum: " + total
-    checking()
+    
+    let cards = [drawCards(),drawCards(),drawCards()]
+   
+    displayCard(cards)
+
+//     while (gameActive && total < 21) {
+//         cards.push(drawCards());
+//         displayCard(cards);
+//     }
+ }
+
+function displayCard(cards) {
+    cardNum.textContent = "Cards: " + cards.join(" - ");
+    let total = cards.reduce((sum, card) => sum + card, 0);
+    sumEl.textContent = "Sum: " + total;
+    checking();
 }
-function secondRound(){
-    if (!gameActive) {
-        console.log("Game is not active. Press reset to start a new game.");
-        return;
-    }
-    cardNum.textContent = " Cards: " + num1 + " - "+ num2  +  " - "+ num3 + " - " + num4;
-    let total = num1+num2+ num3+num4
-    sumEl.textContent = "Sum: " + total
-    checking()
-}
+
 
 function checking() {
-    console.log("sumEl", typeof sumEl.textContent);
     let sumText = sumEl.textContent;
     let totalSum = parseInt(sumText.replace("Sum: ", ""));
 
